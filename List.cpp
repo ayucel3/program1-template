@@ -1,18 +1,19 @@
 #include <iostream>
 #include "List.h"
 
-Node::Node(Planet * ID)
+Node::Node(Planet * p)
 {
-	this -> data =num; 
-	this -> next;
-	this -> prev;
+	this -> data = p; 
+	this -> next = NULL;
+	this -> prev = NULL;
 }
+
 
 List::List()
 {
 	this -> head = NULL;
 	this -> tail = NULL;
-	size = 0;
+	this -> listSize = 0;
 }
 
 List::~List()
@@ -23,39 +24,48 @@ List::~List()
 		p = head ->next;
 		delete head;
 		head = p;
-		size--;
+		listSize--;
 	}
+	delete head;
 }
 
-void insert(int index, Planet * p)
+void List::insert(int index, Planet * p)
 {
-	Node * current = head;
-	int i =0;
-	if
-	{
-		tail->next = new Node(*p);
-		*p -> next = tail;
-		size++;
-		return;
-	}
-	while (current->next != NULL)
-	{
-		
-		if (i == index)
-		{
-			current -> next = new Node(*p);
-			*p -> next = current ->next -> next;
-			size++;
-			return;
+	p->setID( (long int)p );
+	Node * node = new Node(p);
+	if (index == 0) {
+		if (this->head != NULL) {
+			node->next = this->head;
+			this->head->prev = node;
+			this->head = node;
+		} else {
+			this->head = node;
+			this->tail = node;
 		}
-	i++;
-	current = current -> next;
+		this->listSize++;
+		return;
+	} 
+	if (index >= this->listSize) {
+		this->tail->next = node;
+		node->prev = this->tail;
+		this->tail = node;
+	} else {
+		Node * tmp = this->head;
+		for (int i = 0; i < index-1; i++) {
+			tmp = tmp->next;
+		}
+		node->next = tmp->next;
+		tmp->next->prev = node;
+		tmp->next = node;
+		node->prev = tmp;
 	}
+	this->listSize++;
 }
+
 
 Planet * List::read(int index)
 {
-	Node * current = head;
+	Node * current = this->head;
 	for (int i =0; i < index; i++)
 	{
 		if (current -> next != NULL)
@@ -66,34 +76,40 @@ Planet * List::read(int index)
 		{
 			return NULL;
 		}
+	}
 	return current -> data;
-
-
 }
 
 bool List::remove(int index)
 {
-	Node * current = head;
-	int i =0;
+	int i = 0;
+	Node * dummy = new Node(new Planet(0));
+	dummy->next = head;
+	head->prev = dummy;
+
+	Node * current  = dummy;
 	while (current->next != NULL)
 	{
 		if (i == index)
 		{	
 			Node * temp = current -> prev;
-			current -> prev = current -> next;
-			current -> next -> temp;
-			delete[] current;//I dont know if it delets all
-			size--;
+			temp -> next = current -> next;
+			current -> next -> prev = temp;
+			delete current;
+			listSize--;
+			this -> head -> prev = NULL;
+			delete dummy;
 			return true;
 		}
 		current = current -> next;
+		i++;
 		if (i > index)
 		{
-			
+			this -> head -> prev = NULL;
+			delete dummy;
 			return false;
-		}
-		i++;
+		}		
 	}
 }
 
-unsigned List::size(){return this -> size;}
+unsigned List::size() {return this -> listSize;}

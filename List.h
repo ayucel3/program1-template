@@ -1,21 +1,21 @@
 #ifndef _LIST_H_
 #define _LIST_H_
 
-#include <iostream>
 #include "Planet.h"
 
 class Node{
 public:
 	Planet * data;
   	Node * next;
+  	Node * prev;
 
-  	Node();
-  	Node(Planet * num)
+  	Node(Planet * num);
 };
 
 class List{
 private:
 	Node *head, *tail;
+	int listSize;
 	
 public:
 	List();
@@ -24,6 +24,6 @@ public:
 	Planet* read(int);
 	bool remove(int);
 	unsigned size();
-}
+};
 
 #endif
