@@ -1,15 +1,22 @@
+#ifndef _LIST_H_
+#define _LIST_H_
+
 #include <iostream>
+#include "Planet.h"
+
 class Node{
 public:
-  Node();
-  Planet * data;
-  Node * next;
-  Node(Planet * num)
+	Planet * data;
+  	Node * next;
+
+  	Node();
+  	Node(Planet * num)
 };
-}
+
 class List{
 private:
-	Node *head,*tail;
+	Node *head, *tail;
+	
 public:
 	List();
 	~List();
@@ -18,3 +25,5 @@ public:
 	bool remove(int);
 	unsigned size();
 }
+
+#endif

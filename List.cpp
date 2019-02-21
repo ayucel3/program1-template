@@ -1,17 +1,20 @@
 #include <iostream>
 #include "List.h"
+
 Node::Node(Planet * ID)
 {
 	this -> data =num; 
 	this -> next;
 	this -> prev;
-};
+}
+
 List::List()
 {
 	this -> head = NULL;
 	this -> tail = NULL;
 	size = 0;
-};
+}
+
 List::~List()
 {
 	Node *p = head;
@@ -23,6 +26,7 @@ List::~List()
 		size--;
 	}
 }
+
 void insert(int index, Planet * p)
 {
 	Node * current = head;
@@ -48,6 +52,7 @@ void insert(int index, Planet * p)
 	current = current -> next;
 	}
 }
+
 Planet * List::read(int index)
 {
 	Node * current = head;
@@ -65,6 +70,7 @@ Planet * List::read(int index)
 
 
 }
+
 bool List::remove(int index)
 {
 	Node * current = head;
@@ -89,4 +95,5 @@ bool List::remove(int index)
 		i++;
 	}
 }
+
 unsigned List::size(){return this -> size;}
