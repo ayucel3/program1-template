@@ -83,22 +83,25 @@ Planet * List::read(int index)
 bool List::remove(int index)
 {
 	int i = 0;
-	Node * dummy = new Node(new Planet(0));
-	dummy->next = head;
-	head->prev = dummy;
-
-	Node * current  = dummy;
+	Node * current  = head;
 	while (current->next != NULL)
 	{
+		if (index == 0)
+		{
+			Node * temp = head->next;
+			head->next = current;
+			current->next = temp;
+			delete head;
+			head = temp;
+			listSize--;
+			return true;
+		}
 		if (i == index)
 		{	
-			Node * temp = current -> prev;
-			temp -> next = current -> next;
-			current -> next -> prev = temp;
+			current->prev->next = current->next;
+			current->next = current->prev;
 			delete current;
 			listSize--;
-			this -> head -> prev = NULL;
-			delete dummy;
 			return true;
 		}
 		current = current -> next;
@@ -106,7 +109,6 @@ bool List::remove(int index)
 		if (i > index)
 		{
 			this -> head -> prev = NULL;
-			delete dummy;
 			return false;
 		}		
 	}
