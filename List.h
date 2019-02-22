@@ -2,7 +2,6 @@
 #define _LIST_H_
 
 #include "Planet.h"
-#include "Star.h"
 
 class Node{
 public:
