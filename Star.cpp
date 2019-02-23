@@ -4,96 +4,47 @@
 
 // Implementation for Star
 																																																																																		
-Star::Star() {
-	this->planets = NULL;
-	this->current = 0;
-	this->nextId = 0;
+Starlist::Starlist() {
+	//this->planets = NULL;
+	//this->current = 0;
+	//this->nextId = 0;
+	
 }
 
-Star::~Star() {
-	for (int i = 0; i < this->current; i++) {
-		delete this->planets[i];
-	}
-	delete[] this->planets;
-}
+Starlist::~Starlist() { delete palents;}
 
-int Star::addPlanet() {
+int Starlist::addPlanet() {
 	// Create and add new planet
-	Planet ** newList = new Planet*[this->current + 1];
-	for (int i = 0; i < this->current; i++) {
-		newList[i] = this->planets[i];
-	}
 	int distance = rand();
 	Planet * p = new Planet(distance);
-	newList[this->current] = p;
-
-	// Free old array
-	delete[] this->planets;
-
-	// Update
-	this->planets = newList;
-	this->current++;
-	this->nextId++;
+	insert(0,p);
 	return p->getID();
 }
 
-bool Star::removePlanet(int id) {
-	int targetIdx = -1;
-	for (int i = 0; i < this->current; i++) {
-		if (this->planets[i]->getID() == id) {
-			targetIdx = i;
-			break;
-		}
-	}
-	if (targetIdx == -1) return false;
-	
-	// Creat new list
-	Planet ** newList = new Planet*[this->current - 1];
-	for (int i = 0, j = 0; i < this->current; i++) {
-		if (i == targetIdx) continue;
-		newList[j] = this->planets[i];
-		j++;
-	}
-
-	// Free memory
-	delete this->planets[targetIdx];
-	delete[] this->planets;
-
-	//Update
-	this->planets = newList;
-	this->current--;
-	return true;
+bool Starlist::removePlanet(int id) {
+	return planets->removebyID(id);
 }
 
 
-Planet * Star::getPlanet(int id) {
-	Planet * p = NULL;
-	for (int i = 0; i < this->current; i++) {
-		if (this->planets[i]->getID() == id) {
-			p = this->planets[i];
-			break;
-		}
-	}
-	return p;
+Planet * Starlist::getPlanet(int id) {
+	return planets->readbyID(id);
 }
 
-
-void Star::orbit() {
+void Starlist::planetOrbit(){
+	planets->planetbyOrbit();	
+}
+void Starlist::orbit() {
 	for(int i = 0; i < this->current; i++) {
 		this->planets[i]->orbit();
 	}
 }
 
 
-void Star::printStarInfo() {
-	std::cout << "\tThe star has " << this->current << " planets." << std::endl;
+void Starlist::printStarInfo() {
+	std::cout << "\tThe star has " << planets->size(); << " planets." << std::endl;
 	std::cout << "\tPlanets:" << std::endl;
-	for(int i = 0; i < this->current; i++) {
-		std::cout << "\t";
-		this->planets[i]->printPlanetInfo();
-	}
+	planets->printInfo();
 }
-
 
 
 

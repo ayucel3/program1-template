@@ -20,10 +20,14 @@ private:
 public:
 	List();
 	~List();
+	void planetbyOrbit();
 	void insert(int, Planet*);
 	Planet* read(int);
+	Planet* readbyID(int);
 	bool remove(int);
+	bool removebyID(int);
 	unsigned size();
+	void printInfo();
 };
 
 #endif

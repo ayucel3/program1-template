@@ -62,7 +62,21 @@ void List::insert(int index, Planet * p)
 	this->listSize++;
 }
 
-
+Planet * List::readbyID(int ID)
+{
+	int i=0;
+	Node * current  = head;
+	while (current->next != NULL)
+	{
+		if (current->data->getID() == ID)
+		{
+			return read(i);	
+		}
+	i++;
+	current = current->next;
+	}
+	return NULL;
+}
 Planet * List::read(int index)
 {
 	Node * current = this->head;
@@ -79,7 +93,39 @@ Planet * List::read(int index)
 	}
 	return current -> data;
 }
-
+boold List::removebyID(int ID)
+{	
+	int i=0;
+	Node * current  = head;
+	while (current->next != NULL)
+	{
+		if (current->data->getID() == ID)
+		{
+			return remove(i);	
+		}
+	i++;
+	current = current->next;
+	}
+	return false;
+}
+void List::planetOrbit()
+{
+	Node * current  = head;
+	while (current->next != NULL)
+	{
+		current->data->orbit();
+		current = current->next;
+	}	
+}
+void List::printInfo()
+{
+	Node * current  = head;
+	while (current->next != NULL)
+	{
+		current->data->printPlanetInfo();
+		current = current->next;
+	}
+}
 bool List::remove(int index)
 {
 	int i = 0;
@@ -116,3 +162,4 @@ bool List::remove(int index)
 }
 
 unsigned List::size() {return this -> listSize;}
+
