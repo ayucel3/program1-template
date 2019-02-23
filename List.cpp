@@ -112,6 +112,7 @@ bool List::remove(int index)
 			return false;
 		}		
 	}
+	return false;
 }
 
 unsigned List::size() {return this -> listSize;}
